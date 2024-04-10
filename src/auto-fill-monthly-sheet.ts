@@ -4,7 +4,6 @@
 // 62133836802e760075476b37 = Hieu Nguyen
 // 62972bd1b407cc0069ffc56d = Long Tran
 
-// Change below const as needed
 const userIdJQL = '61cbe154567cb700707d55ca';
 const userName = 'Kha Pham';
 // formatDate: 0 - JQL format: YYYY-MM-DD hh:mm
@@ -28,6 +27,7 @@ function getFristDayOfMonthDateTimeString(formatDate) {
       return `${year}-${month}-${day} 00:00`;
     }
     case 1: {
+      // raw object
       return firstDayOfCurrentMonth;
     }
     case 2: {
@@ -109,6 +109,13 @@ function checkValidIssues(ticketId) {
       }
     }
   });
+  // User just take ticket, not assign to someone else
+  if (daysHoldingTicket.length === 0 && holdingTicketFlag !== undefined && holdingTicketFlag !== null) {
+    const currentDate = new Date().getDate();
+    const dateHolding = addDays(holdingTicketFlag.getDate(), currentDate);
+    daysHoldingTicket.push(dateHolding);
+    holdingTicketFlag = null;
+  }
   return daysHoldingTicket;
 }
 
